@@ -11,7 +11,6 @@ import subprocess
 
 import click
 
-#import nf_core
 
 class PipelineLint(object):
     """ Object to hold linting info and results """
@@ -106,8 +105,12 @@ class PipelineLint(object):
 
     def check_docker(self):
         """minimal tests only"""
-        logging.debug('Checking Dockerfile')
         fn = os.path.join(self.path, "Dockerfile")
+        # existance verified elsewhere
+        if not os.path.exists(fn):
+            return
+        
+        logging.debug('Checking Dockerfile')
         with open(fn, 'r') as fh: content = fh.read()
 
         # Implicitely also checks if empty.
